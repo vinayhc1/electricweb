@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+<!--{% load static %} : You can load static files from static directory using this -->
+
+{% block title %}
+<title>Manage Item Types</title>
+{% endblock title %}
+
+{% block adminnavbar %}<a class="nav-link active" aria-current="page" href="/local_admin">Admin</a>{% endblock adminnavbar %} 
+
+{% block content %}
+
+<br>
+<h1 class = 'text-center'>Manage Item Types</h1>
+<hr>
+<br>
+
+<!-- Section: Split screen -->
+<section class="">
+  <div class="container-fluid">
+    <div class="row">
+      {% for message in messages %}         
+      <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+            <strong>{{message}}</strong> 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div> 
+      {% endfor %}
+      <div class="col-lg-4">
+        <div class = "container">
+        <h4>Add New Item Type<h4>   
+        <hr>
+        <br>
+        <div class = "container">
+          <form class = "row g-3" action = "/add_itemtype" method = 'POST'>
+             {% csrf_token %}
+           
+              <div class="col-auto">
+                <input class="form-control" id="type" name = "type" type="text" placeholder = "Item Type" required=""  />
+              </div>
+
+              <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Add</button>
+              </div>
+
+            </form>
+          </div>
+          </div>
+       </div>
+     <br>
+
+      <div class="col-lg-1">
+      </div>
+
+     <br>
+
+      <div class="col-lg-6">
+        <div class = "container">
+        <h4>Existing Item Types<h4>   
+          <hr>
+          <br>
+          {% for item in itemtypes %}
+          <form class="row g-3" action = "/delete_itemtype" method = 'POST' >
+              {% csrf_token %} 
+
+              <div class="col-auto">
+                <input type="text" readonly class="visually-hidden" id="id" name = "id" value="{{item.id}}">
+              </div>
+
+              <div class="col-auto">
+                <input class="form-control" type="text" id ="type" name ="type" value="{{item.type}}" aria-label="" disabled readonly>
+              </div>
+
+              <div class="col-auto">
+                <button type="submit" class="btn btn-danger mb-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5Zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6Z"/>
+                    <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1ZM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118ZM2.5 3h11V2h-11v1Z"/>
+                </svg>
+              </button>
+              </div>  
+              
+
+          </form>
+
+        
+
+          {% endfor %}
+          
+          
+      </div>
+      <br>
+      <p class ="text-danger">Note: Deleting Item Type will DELETE ALL ITEMS associated with ITEM TYPE</p>
+      </div>
+      
+    </div>
+  </div>
+
+</section>
+<!-- Section: Split screen -->
+
+
+
+{% endblock content %}

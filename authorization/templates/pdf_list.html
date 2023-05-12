@@ -1,0 +1,181 @@
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Print List</title>
+
+    <style>
+    h1{ 
+        color: Black ; 
+        text-align: center; 
+        font-family: "Lucida Console", "Courier New", monospace;
+        font-size: 20px;
+
+    }
+    
+   
+
+    h2{ 
+        color: Black ; 
+        text-align: center; 
+        font-family: "Lucida Console", "Courier New", monospace;
+        font-size: 15px;
+
+    }
+
+    h5{ 
+        color: Black ; 
+        text-align: center; 
+        font-family: "Lucida Console", "Courier New", monospace;
+        font-size: 15px;
+
+    }
+
+    p{
+        color: Black ; 
+        text-align: right; 
+        font-family: verdana;
+        font-size: 12px;
+    }
+
+    .right{
+        text-align: right; 
+    }
+
+    .left{
+        text-align: left; 
+    }
+
+    table {
+        width: 80%;
+      }
+      
+      table, td, th {
+        border: 1px solid black;
+      }
+      
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      
+      th {
+        height: 40px;
+        font-size: 16px
+      }
+
+      td{
+        
+        text-align: center;
+        height: 35px;
+        font-size: 14px
+      }
+
+     
+    </style>
+
+</head>
+
+<body>
+     
+        <div class = "container">
+        <h1 >Sri Veerabhadreshwara Electricals</h1>
+        {% if price == 1 %}
+            <h2 >Bill for {{cust}}</h2>
+        {% else%}
+            <h2 >Material List for {{cust}}</h2>
+        {% endif %}
+        
+        <p>Dileep G S</p>
+        <p>Ph: 9590117666<br>Chikkamagaluru</p>
+        <hr>
+        <br> 
+        {% if type == 'All' %}
+                {% regroup matlist by type as mat_list %}
+                                
+                    {% for mat in mat_list %}
+                     <h5>{{ mat.grouper }}</h5>
+                    
+                    
+                        <table>
+                           <tr>
+                                <th>Serial Number</th>
+                                <th>Item</th>
+                                <th>Brand</th>
+                                <th>Quantity</th>
+                                {% if price == 1 %}
+                                <th>Price</th>
+                                {% endif %}
+                           </tr>
+                            {% for m in mat.list %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{m.item}}</td>
+                                <td>{{m.brand}}</td>
+                                <td>{{m.quantity}}</td>
+                                {% if price == 1 %}
+                                <td>{{m.price}}</td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                    </table>
+                
+                    <br>
+                    {% endfor %}
+        {% else %}
+                <h5>{{ type }}</h5>
+                <hr>
+                
+                <table>
+                    <tr>
+                        <th>Serial Number</th>
+                        <th>Item</th>
+                        <th>Brand</th>
+                        <th>Quantity</th>
+                        {% if price == 1 %}
+                            <th>Price</th>
+                        {% endif %}
+                    </tr>
+                    <br>
+                    {% for m in matlist %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{m.item}}</td>
+                        <td>{{m.brand}}</td>
+                        <td>{{m.quantity}}</td>
+                        {% if price == 1 %}
+                            <td>{{m.price}}</td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}  
+                </table>
+            
+        {% endif %}
+        <br>
+        {% if price == 1 %}
+        <hr>
+                
+       {% if labour != 0 %}
+                <h5 class = "right">Material Amount :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{total}}</h5>
+
+                <h5 class = "right">Labour Charges&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{labour}}</h5>
+                <hr>
+ 
+                <h5 class = "right">Total Amount&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ftotal}}</h5>
+        {% else %}
+                <h5 class = "right">Total Amount &nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{total}}</h5>
+       {% endif %}
+       
+        {% endif %}
+        <br>
+        <h6 style = "text-align: center">**** End Of Statement ****</h6>
+    </div>
+
+    
+
+</body>
+
+
+</html>
