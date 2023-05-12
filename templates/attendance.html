@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Add Attendance</title>
+{% endblock title %}
+
+{% block attnavbar %}<a class="nav-link active" aria-current="page" href="/attendance">Attendance</a>{% endblock attnavbar %} 
+
+{% block content %}
+
+<div class="row">
+
+    <div class="col">
+        <br>
+      <div class = "container">
+         <div class="card text-center">
+            <h5 class="card-header" >
+                Add Attendance
+            </h5>
+             <div class="card-body">
+                  <br>
+                   <div class = "container">
+                   
+                        {% for message in messages %}         
+                            <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                                    <strong>{{message}}</strong> 
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div> 
+                        {% endfor %}
+
+                            <form class="row g-3" action = "/attendance" method = "POST">
+                                {% csrf_token %}
+                                
+                                <div class="col-auto">
+                                    <select class="form-select" name = "name" id = "name">
+                                        <option selected="selected" >Select Employee</option>
+                                        {% for employee in employees %}
+                                        <option value="{{employee.name}}">{{employee.name}}</option>
+                                        {% endfor %}
+                                       <input type="number" readonly class="visually-hidden" id="pay" name ="pay" value="{{employee.payperday}}">
+                                        
+                                    </select>
+                                </div>
+                                
+                                <div class = "col-auto" >
+                                    <input type="date" class="form-control" id="date" name="date" required ="">
+                                </div>
+
+                                <div class = "col-auto">
+                                    <input type="number" class="form-control" id="value" name="value" min = 0 max = 2 step = "0.5" value = 0 required ="">
+                                </div>
+
+                                <div class="col-auto">
+                                <button type="submit" class="btn btn-primary mb-3">Add </button>
+                                </div>
+                            </form>
+                    </div>
+              </div>
+         </div>
+     </div>
+</div>
+</div>
+
+</div>
+
+{% endblock content %}
